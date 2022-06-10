@@ -4,15 +4,18 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { Container, Grid, Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
-
+import { forwardRef, Ref } from 'react';
 interface Props {
-  news: News[];
-  setLastIntersectingImage?: React.Dispatch<
-    React.SetStateAction<HTMLDivElement | null>
-  >;
+  detail: {
+    news: News[];
+    setLastIntersectingImage?: React.Dispatch<
+      React.SetStateAction<HTMLDivElement | null>
+    >;
+  };
+  ref: Ref<HTMLDivElement>;
 }
 
-const CardList = ({ news }: Props) => {
+const CardList = ({ news }: Props['detail']) => {
   return (
     <>
       <Container>
