@@ -73,15 +73,14 @@ const App: FC = () => {
         if (entries[0].isIntersecting && hasMore) {
           console.log('visible');
           setPage((prev) => prev + 1);
+          getData(search, page);
         }
       });
       if (node) observer.current.observe(node);
     },
     [loading, hasMore]
   );
-  useEffect(() => {
-    getData(search, page);
-  }, [page]);
+
   return (
     <>
       <Header />
