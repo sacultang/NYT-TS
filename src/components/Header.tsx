@@ -10,8 +10,10 @@ const Header = () => {
         fontSize: 40,
         display: 'flex',
         alignItems: 'center',
-        fontFamily: 'Tinos, serif',
+        fontFamily: 'Libre Bodoni, serif',
         position: 'relative',
+        fontWeight: 600,
+        letterSpacing: -0.9,
         '&::after': {
           marginTop: '1px',
           borderBottom: '1px solid #ccc',
