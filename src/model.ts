@@ -3,6 +3,8 @@ export interface News {
   web_url: string;
   multimedia: MultiMedia[];
   headline: { main: string };
+  _id: string;
+  uri: string;
 }
 interface MultiMedia {
   rank: number;

@@ -14,6 +14,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { Container, Grid, Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // component
 import CardList from './components/CardList';
@@ -32,7 +33,6 @@ const App: FC = () => {
   const [page, setPage] = useState(0);
 
   // 데이터 요청
-
   const getData = (query: string, page: number) => {
     setLoading(true);
     setError(false);
@@ -62,6 +62,10 @@ const App: FC = () => {
     setPage(1);
   };
 
+  useEffect(() => {
+    setNews([]);
+  }, [search]);
+
   // observer
   const observer = useRef<HTMLDivElement | any>(null);
 
@@ -80,7 +84,7 @@ const App: FC = () => {
     },
     [loading, hasMore]
   );
-
+  console.log(news);
   return (
     <>
       <Header />
@@ -92,89 +96,93 @@ const App: FC = () => {
               {news.map((item, idx) => {
                 if (news.length === idx + 1) {
                   return (
-                    <>
-                      <Grid
-                        item
-                        md={4}
-                        key={item.headline.main}
-                        ref={lastBookelementRef}
+                    <Grid item md={4} ref={lastBookelementRef} key={item.uri}>
+                      <Card
+                        sx={{
+                          minWidth: 300,
+                          maxWidth: 500,
+                          minHeight: 200,
+                          padding: 2,
+                          boxSizing: 'border-box',
+                        }}
                       >
-                        <Card
-                          sx={{
-                            minWidth: 300,
-                            maxWidth: 500,
-                            minHeight: 200,
-                            padding: 2,
-                            boxSizing: 'border-box',
-                          }}
-                        >
-                          <CardContent>
-                            <Typography
-                              variant='h4'
-                              sx={{
-                                fontWeight: 700,
-                                lineHeight: 1.023,
-                                mb: 1.5,
-                              }}
-                            >
-                              {item.headline.main}
-                            </Typography>
-                            <Typography variant='body1'>
-                              {item.abstract}
-                            </Typography>
-                          </CardContent>
-                          <CardActions>
-                            <Button size='small' sx={{ color: 'gray' }}>
-                              Read More
-                            </Button>
-                          </CardActions>
-                        </Card>
-                      </Grid>
-                    </>
+                        <CardContent>
+                          <Typography
+                            variant='h4'
+                            sx={{
+                              fontWeight: 700,
+                              lineHeight: 1.023,
+                              mb: 1.5,
+                            }}
+                          >
+                            {item.headline.main}
+                          </Typography>
+                          <Typography variant='body1'>
+                            {item.abstract}
+                          </Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button size='small' sx={{ color: 'gray' }}>
+                            Read More
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </Grid>
                   );
                 } else {
                   return (
-                    <>
-                      <Grid item md={4} key={item.headline.main}>
-                        <Card
-                          sx={{
-                            minWidth: 300,
-                            maxWidth: 500,
-                            minHeight: 200,
-                            padding: 2,
-                            boxSizing: 'border-box',
-                          }}
-                        >
-                          <CardContent>
-                            <Typography
-                              variant='h4'
-                              sx={{
-                                fontWeight: 700,
-                                lineHeight: 1.023,
-                                mb: 1.5,
-                              }}
-                            >
-                              {item.headline.main}
-                            </Typography>
-                            <Typography variant='body1'>
-                              {item.abstract}
-                            </Typography>
-                          </CardContent>
-                          <CardActions>
-                            <Button size='small' sx={{ color: 'gray' }}>
-                              Read More
-                            </Button>
-                          </CardActions>
-                        </Card>
-                      </Grid>
-                    </>
+                    <Grid item md={4} key={item.uri}>
+                      <Card
+                        sx={{
+                          minWidth: 300,
+                          maxWidth: 500,
+                          minHeight: 200,
+                          padding: 2,
+                          boxSizing: 'border-box',
+                        }}
+                      >
+                        <CardContent>
+                          <Typography
+                            variant='h4'
+                            sx={{
+                              fontWeight: 700,
+                              lineHeight: 1.023,
+                              mb: 1.5,
+                            }}
+                          >
+                            {item.headline.main}
+                          </Typography>
+                          <Typography variant='body1'>
+                            {item.abstract}
+                          </Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button size='small' sx={{ color: 'gray' }}>
+                            Read More
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </Grid>
                   );
                 }
               })}
             </Grid>
           </Container>
         </>
-        <div>{loading && 'Loading...'}</div>
+
+        {loading && (
+          <CircularProgress
+            sx={{
+              position: 'fixed',
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              margin: 'auto',
+            }}
+          />
+        )}
+
         <div>{error && 'Error'}</div>
       </Container>
     </>
