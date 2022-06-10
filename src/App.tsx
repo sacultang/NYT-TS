@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  FC,
-  FormEvent,
-  useState,
-  useRef,
-  useCallback,
-} from 'react';
+import { useEffect, FC, FormEvent, useState, useRef, useCallback } from 'react';
 
 // library
 import axios from 'axios';
@@ -18,13 +11,15 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Route, Routes, Link } from 'react-router-dom';
 
 // component
-import CardList from './components/CardList';
 import Search from './components/Search';
 import Header from './components/Header';
 import NewsDetail from './components/NewsDetail';
 
 // type
 import { News } from './model';
+
+// api
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 const App: FC = () => {
   const [loading, setLoading] = useState(false);
@@ -38,7 +33,7 @@ const App: FC = () => {
   const getData = (query: string, page: number) => {
     setLoading(true);
     setError(false);
-    const API_KEY = '9NtLMxmAG09fgLDdyjyl5CG3y4uGk1EE';
+
     axios({
       method: 'GET',
       url: `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${API_KEY}`,
@@ -86,7 +81,7 @@ const App: FC = () => {
     },
     [loading, hasMore]
   );
-  console.log(news);
+
   return (
     <>
       <Header />
@@ -134,7 +129,7 @@ const App: FC = () => {
                               </CardContent>
                               <CardActions>
                                 <Button size='small' sx={{ color: 'gray' }}>
-                                  Read More
+                                  Clip
                                 </Button>
                               </CardActions>
                             </Card>
@@ -170,7 +165,7 @@ const App: FC = () => {
                               <CardActions>
                                 <Link to='/news/id'>
                                   <Button size='small' sx={{ color: 'gray' }}>
-                                    Read More
+                                    Clip
                                   </Button>
                                 </Link>
                               </CardActions>

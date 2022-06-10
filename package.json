@@ -13,6 +13,7 @@
     "@mui/lab": "^5.0.0-alpha.85",
     "@mui/material": "^5.8.3",
     "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0"

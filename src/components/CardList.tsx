@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { Container, Grid, Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { forwardRef, Ref } from 'react';
+import { Ref } from 'react';
 interface Props {
   detail: {
     news: News[];
@@ -42,7 +42,7 @@ const CardList = ({ news }: Props['detail']) => {
                 </CardContent>
                 <CardActions>
                   <Button size='small' sx={{ color: 'gray' }}>
-                    Read More
+                    Clip
                   </Button>
                 </CardActions>
               </Card>
