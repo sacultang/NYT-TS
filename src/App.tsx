@@ -14,11 +14,14 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { Container, Grid, Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import { Route, Routes, Link } from 'react-router-dom';
 
 // component
 import CardList from './components/CardList';
 import Search from './components/Search';
 import Header from './components/Header';
+import NewsDetail from './components/NewsDetail';
 
 // type
 import { News } from './model';
@@ -32,7 +35,6 @@ const App: FC = () => {
   const [page, setPage] = useState(0);
 
   // 데이터 요청
-
   const getData = (query: string, page: number) => {
     setLoading(true);
     setError(false);
@@ -62,6 +64,10 @@ const App: FC = () => {
     setPage(1);
   };
 
+  useEffect(() => {
+    setNews([]);
+  }, [search]);
+
   // observer
   const observer = useRef<HTMLDivElement | any>(null);
 
@@ -80,103 +86,122 @@ const App: FC = () => {
     },
     [loading, hasMore]
   );
-
+  console.log(news);
   return (
     <>
       <Header />
-      <Container>
-        <Search setSearch={setSearch} click={handleClick} />
-        <>
-          <Container>
-            <Grid container spacing={2} mt={10}>
-              {news.map((item, idx) => {
-                if (news.length === idx + 1) {
-                  return (
-                    <>
-                      <Grid
-                        item
-                        md={4}
-                        key={item.headline.main}
-                        ref={lastBookelementRef}
-                      >
-                        <Card
-                          sx={{
-                            minWidth: 300,
-                            maxWidth: 500,
-                            minHeight: 200,
-                            padding: 2,
-                            boxSizing: 'border-box',
-                          }}
-                        >
-                          <CardContent>
-                            <Typography
-                              variant='h4'
+      <Routes>
+        <Route
+          path='/'
+          element={
+            <Container>
+              <Search setSearch={setSearch} click={handleClick} />
+              <>
+                <Container>
+                  <Grid container spacing={2} mt={10}>
+                    {news.map((item, idx) => {
+                      if (news.length === idx + 1) {
+                        return (
+                          <Grid
+                            item
+                            md={4}
+                            ref={lastBookelementRef}
+                            key={item.uri}
+                          >
+                            <Card
                               sx={{
-                                fontWeight: 700,
-                                lineHeight: 1.023,
-                                mb: 1.5,
+                                minWidth: 300,
+                                maxWidth: 500,
+                                minHeight: 200,
+                                padding: 2,
+                                boxSizing: 'border-box',
                               }}
                             >
-                              {item.headline.main}
-                            </Typography>
-                            <Typography variant='body1'>
-                              {item.abstract}
-                            </Typography>
-                          </CardContent>
-                          <CardActions>
-                            <Button size='small' sx={{ color: 'gray' }}>
-                              Read More
-                            </Button>
-                          </CardActions>
-                        </Card>
-                      </Grid>
-                    </>
-                  );
-                } else {
-                  return (
-                    <>
-                      <Grid item md={4} key={item.headline.main}>
-                        <Card
-                          sx={{
-                            minWidth: 300,
-                            maxWidth: 500,
-                            minHeight: 200,
-                            padding: 2,
-                            boxSizing: 'border-box',
-                          }}
-                        >
-                          <CardContent>
-                            <Typography
-                              variant='h4'
+                              <CardContent>
+                                <Typography
+                                  variant='h4'
+                                  sx={{
+                                    fontWeight: 700,
+                                    lineHeight: 1.023,
+                                    mb: 1.5,
+                                  }}
+                                >
+                                  {item.headline.main}
+                                </Typography>
+                                <Typography variant='body1'>
+                                  {item.abstract}
+                                </Typography>
+                              </CardContent>
+                              <CardActions>
+                                <Button size='small' sx={{ color: 'gray' }}>
+                                  Read More
+                                </Button>
+                              </CardActions>
+                            </Card>
+                          </Grid>
+                        );
+                      } else {
+                        return (
+                          <Grid item md={4} key={item.uri}>
+                            <Card
                               sx={{
-                                fontWeight: 700,
-                                lineHeight: 1.023,
-                                mb: 1.5,
+                                minWidth: 300,
+                                maxWidth: 500,
+                                minHeight: 200,
+                                padding: 2,
+                                boxSizing: 'border-box',
                               }}
                             >
-                              {item.headline.main}
-                            </Typography>
-                            <Typography variant='body1'>
-                              {item.abstract}
-                            </Typography>
-                          </CardContent>
-                          <CardActions>
-                            <Button size='small' sx={{ color: 'gray' }}>
-                              Read More
-                            </Button>
-                          </CardActions>
-                        </Card>
-                      </Grid>
-                    </>
-                  );
-                }
-              })}
-            </Grid>
-          </Container>
-        </>
-        <div>{loading && 'Loading...'}</div>
-        <div>{error && 'Error'}</div>
-      </Container>
+                              <CardContent>
+                                <Typography
+                                  variant='h4'
+                                  sx={{
+                                    fontWeight: 700,
+                                    lineHeight: 1.023,
+                                    mb: 1.5,
+                                  }}
+                                >
+                                  {item.headline.main}
+                                </Typography>
+                                <Typography variant='body1'>
+                                  {item.abstract}
+                                </Typography>
+                              </CardContent>
+                              <CardActions>
+                                <Link to='/news/id'>
+                                  <Button size='small' sx={{ color: 'gray' }}>
+                                    Read More
+                                  </Button>
+                                </Link>
+                              </CardActions>
+                            </Card>
+                          </Grid>
+                        );
+                      }
+                    })}
+                  </Grid>
+                </Container>
+              </>
+
+              {loading && (
+                <CircularProgress
+                  sx={{
+                    position: 'fixed',
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    margin: 'auto',
+                  }}
+                />
+              )}
+
+              <div>{error && 'Error'}</div>
+            </Container>
+          }
+        />
+        <Route path='/news/:id' element={<NewsDetail />} />
+      </Routes>
     </>
   );
 };
