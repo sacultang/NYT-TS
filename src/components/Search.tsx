@@ -1,11 +1,11 @@
-import React, { FormEvent } from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import styled from '@emotion/styled';
+
 interface Props {
   search?: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
-  click: (e: FormEvent) => void;
 }
 const Form = styled.form`
   display: flex;
@@ -28,20 +28,22 @@ const CssTextField = styled(TextField)({
     border: 'none',
   },
 });
-const Search = ({ setSearch, click }: Props) => {
+
+const Search = ({ setSearch }: Props) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
   return (
-    <Form onSubmit={click}>
+    <Form>
       <CssTextField
         sx={{ width: 600 }}
         type='text'
         size='small'
         label='Search..'
         variant='standard'
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={handleChange}
       />
-      <CssButton variant='outlined' type='submit'>
-        Search
-      </CssButton>
+      <CssButton variant='outlined'>Search</CssButton>
     </Form>
   );
 };

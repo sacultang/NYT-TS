@@ -2,7 +2,7 @@ import { useEffect, FC, FormEvent, useState, useRef, useCallback } from 'react';
 
 // library
 import axios from 'axios';
-
+import _debounce from 'lodash/debounce';
 import { Route, Routes } from 'react-router-dom';
 
 // component
@@ -48,17 +48,23 @@ const App: FC = () => {
         setError(true);
       });
   };
-
-  const handleClick = (e: FormEvent) => {
-    e.preventDefault();
-    getData(search, page);
-    setPage(1);
-  };
-
   useEffect(() => {
     setNews([]);
   }, [search]);
 
+  useEffect(() => {
+    if (search !== '') {
+      if (!loading) {
+        const timer = setTimeout(() => {
+          getData(search, page);
+          setPage(1);
+        }, 1500);
+        return () => {
+          clearTimeout(timer);
+        };
+      }
+    }
+  }, [search, page]);
   // observer
   const observer = useRef<HTMLDivElement | any>(null);
 
@@ -90,7 +96,6 @@ const App: FC = () => {
               loading={loading}
               error={error}
               setSearch={setSearch}
-              handleClick={handleClick}
               lastBookelementRef={lastBookelementRef}
             />
           }

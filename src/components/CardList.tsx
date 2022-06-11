@@ -23,7 +23,6 @@ interface Props {
   loading: boolean;
   error: boolean;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
-  handleClick: (e: FormEvent) => void;
   lastBookelementRef: (node: any) => void;
 }
 
@@ -32,20 +31,24 @@ const CardList = ({
   loading,
   error,
   setSearch,
-  handleClick,
   lastBookelementRef,
 }: Props) => {
   return (
     <>
       <Container>
-        <Search setSearch={setSearch} click={handleClick} />
+        <Search setSearch={setSearch} />
         <>
           <Container>
             <Grid container spacing={2} mt={10}>
               {news.map((item, idx) => {
                 if (news.length === idx + 1) {
                   return (
-                    <Grid item md={4} ref={lastBookelementRef} key={item.uri}>
+                    <Grid
+                      item
+                      md={4}
+                      ref={lastBookelementRef}
+                      key={item.headline.main}
+                    >
                       <Card
                         sx={{
                           minWidth: 300,
@@ -80,7 +83,7 @@ const CardList = ({
                   );
                 } else {
                   return (
-                    <Grid item md={4} key={item.uri}>
+                    <Grid item md={4} key={item.headline.main}>
                       <Card
                         sx={{
                           minWidth: 300,
