@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { News } from '../model';
 
 // Mui Library
@@ -20,6 +21,62 @@ interface Props {
 }
 
 const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
+  const [clip, setClip] = useState<string[]>([]);
+  const [clipStorageItem, setclipStorageItem] = useState(
+    JSON.parse(localStorage.getItem('Clip') || '[]')
+  );
+  const [flip, setFlip] = useState(false);
+  const handleClip = (date: string, abstract: string, head: string) => {
+    const newClip = {
+      date,
+      abstract,
+      head,
+      clip: !flip,
+    };
+
+    if (!clipStorageItem.length) {
+      setclipStorageItem([...clipStorageItem, newClip]);
+      setClip((item) => [...item, date]);
+      setFlip(false);
+    } else {
+      clipStorageItem.forEach((i: any) => {
+        if (i.date !== date) {
+          setclipStorageItem([...clipStorageItem, newClip]);
+          setClip((item) => [...item, date]);
+        } else {
+          setClip(clip.filter((item) => date !== item));
+          let getClip: any = localStorage.getItem('Clip');
+          getClip = JSON.parse(getClip);
+          setclipStorageItem([
+            ...new Set([...getClip.filter((item: any) => item.date !== date)]),
+          ]);
+        }
+      });
+    }
+
+    // if (!clip.includes(date)) {
+    //   setClip((item) => [...item, date]);
+    //   const newClip = {
+    //     date,
+    //     abstract,
+    //     head,
+    //   };
+    //   setclipStorageItem([...clipStorageItem, newClip]);
+    // } else {
+    //   setClip(clip.filter((item) => date !== item));
+    //   let getClip: any = localStorage.getItem('Clip');
+    //   getClip = JSON.parse(getClip);
+    //   if (getClip.forEach((i: any) => i.date !== date)) {
+    //     setclipStorageItem([
+    //       ...new Set([...getClip.filter((item: any) => item.date !== date)]),
+    //     ]);
+    //   }
+    // }
+  };
+
+  useEffect(() => {
+    localStorage.setItem('Clip', JSON.stringify(clipStorageItem));
+  }, [clipStorageItem, clip, flip]);
   return (
     <>
       <Container sx={{ position: 'relative' }}>
@@ -55,7 +112,17 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
                       <Typography variant='body1'>{item.abstract}</Typography>
                     </CardContent>
                     <CardActions>
-                      <Button size='small' sx={{ color: 'gray' }}>
+                      <Button
+                        size='small'
+                        variant='contained'
+                        onClick={() =>
+                          handleClip(
+                            item.pub_date,
+                            item.abstract,
+                            item.headline.main
+                          )
+                        }
+                      >
                         Clip
                       </Button>
                     </CardActions>
@@ -85,7 +152,17 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
                       <Typography variant='body1'>{item.abstract}</Typography>
                     </CardContent>
                     <CardActions>
-                      <Button size='small' sx={{ color: 'gray' }}>
+                      <Button
+                        size='small'
+                        variant='contained'
+                        onClick={() =>
+                          handleClip(
+                            item.pub_date,
+                            item.abstract,
+                            item.headline.main
+                          )
+                        }
+                      >
                         Clip
                       </Button>
                     </CardActions>

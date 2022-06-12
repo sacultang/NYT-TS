@@ -5,6 +5,7 @@ export interface News {
   headline: { main: string };
   _id: string;
   uri: string;
+  pub_date: string;
 }
 interface MultiMedia {
   rank: number;
