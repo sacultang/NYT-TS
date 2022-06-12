@@ -8,13 +8,6 @@ import { Container, Grid, Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
-//
-
-import { Link } from 'react-router-dom';
-
-// Components
-import Search from './Search';
-
 interface Props {
   news: News[];
   setLastIntersectingImage?: React.Dispatch<
@@ -92,11 +85,9 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
                       <Typography variant='body1'>{item.abstract}</Typography>
                     </CardContent>
                     <CardActions>
-                      <Link to='/news/id'>
-                        <Button size='small' sx={{ color: 'gray' }}>
-                          Clip
-                        </Button>
-                      </Link>
+                      <Button size='small' sx={{ color: 'gray' }}>
+                        Clip
+                      </Button>
                     </CardActions>
                   </Card>
                 </Grid>

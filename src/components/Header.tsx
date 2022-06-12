@@ -1,11 +1,12 @@
-import { Box, Container } from '@mui/material';
+import { Box, Container, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
     <Box
       mb={4}
       sx={{
-        height: 100,
+        p: 4,
         borderBottom: '1px solid #3e3e3e',
         fontSize: 40,
         display: 'flex',
@@ -25,7 +26,15 @@ const Header = () => {
         },
       }}
     >
-      <Container style={{ textAlign: 'center' }}>New York Times</Container>
+      <Container style={{ textAlign: 'center' }}>
+        <div>New York Times</div>
+        <Link to='/'>
+          <Button>Main</Button>
+        </Link>
+        <Link to='/clip'>
+          <Button>Clip</Button>
+        </Link>
+      </Container>
     </Box>
   );
 };

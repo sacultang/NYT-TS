@@ -9,7 +9,7 @@ import { Route, Routes } from 'react-router-dom';
 // component
 
 import Header from './components/Header';
-import NewsDetail from './components/NewsDetail';
+import NewsDetail from './routes/NewsDetail';
 
 const App: FC = () => {
   return (
@@ -17,7 +17,7 @@ const App: FC = () => {
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/news/:id' element={<NewsDetail />} />
+        <Route path='/clip' element={<NewsDetail />} />
       </Routes>
     </>
   );
