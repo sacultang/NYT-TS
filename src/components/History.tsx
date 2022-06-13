@@ -1,12 +1,10 @@
 import { Box } from '@mui/material';
+import { HistoryType } from '../model';
 interface Props {
-  history: [];
+  history: HistoryType[];
   inputFocus: boolean;
 }
-interface HistoryItem {
-  id: number;
-  text: string;
-}
+
 const History = ({ history, inputFocus }: Props) => {
   return (
     <>
@@ -26,7 +24,7 @@ const History = ({ history, inputFocus }: Props) => {
             border: '1px solid #ccc',
           }}
         >
-          {history.map((key: HistoryItem) => {
+          {history.map((key: HistoryType) => {
             return <div key={key.id}>{key.text}</div>;
           })}
         </Box>

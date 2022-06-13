@@ -7,7 +7,7 @@ import Search from '../components/Search';
 import History from '../components/History';
 
 // type
-import { News } from '../model';
+import { News, HistoryType } from '../model';
 
 // api
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -24,7 +24,7 @@ const Home = () => {
 
   // History 추가
 
-  const [history, setHistory] = useState(
+  const [history, setHistory] = useState<HistoryType[]>(
     JSON.parse(localStorage.getItem('keywords') || '[]')
   );
 
@@ -98,7 +98,8 @@ const Home = () => {
   const observer = useRef<HTMLDivElement | any>(null);
 
   const lastBookelementRef = useCallback(
-    (node: any) => {
+    (node: HTMLDivElement) => {
+      // console.log(node);
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {

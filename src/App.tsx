@@ -1,9 +1,8 @@
-import { useEffect, FC, useState, useRef, useCallback } from 'react';
+import { FC } from 'react';
 import Home from './routes/Home';
 
 // library
 
-import _debounce from 'lodash/debounce';
 import { Route, Routes } from 'react-router-dom';
 
 // component

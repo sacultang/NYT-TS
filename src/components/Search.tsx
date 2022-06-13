@@ -32,10 +32,6 @@ const CssTextField = styled(TextField)({
 const Search = ({ setSearch, setInputFocus }: Props) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    const newKeyword = {
-      id: new Date(),
-      text: e.target.value,
-    };
   };
 
   return (

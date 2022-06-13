@@ -17,7 +17,7 @@ interface Props {
   loading: boolean;
   error: boolean;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
-  lastBookelementRef: (node: any) => void;
+  lastBookelementRef: (node: HTMLDivElement) => void;
 }
 
 const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
@@ -26,12 +26,17 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
     JSON.parse(localStorage.getItem('Clip') || '[]')
   );
   const [flip, setFlip] = useState(false);
-  const handleClip = (date: string, abstract: string, head: string) => {
+  const handleClip = (
+    date: string,
+    abstract: string,
+    head: string,
+    _id: string
+  ) => {
     const newClip = {
       date,
       abstract,
       head,
-      clip: !flip,
+      _id,
     };
 
     if (!clipStorageItem.length) {
@@ -39,7 +44,7 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
       setClip((item) => [...item, date]);
       setFlip(false);
     } else {
-      clipStorageItem.forEach((i: any) => {
+      clipStorageItem.forEach((i: typeof newClip) => {
         if (i.date !== date) {
           setclipStorageItem([...clipStorageItem, newClip]);
           setClip((item) => [...item, date]);
@@ -90,7 +95,7 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
                   md={4}
                   sm={12}
                   ref={lastBookelementRef}
-                  key={item.headline.main}
+                  key={item._id}
                 >
                   <Card
                     sx={{
@@ -119,11 +124,16 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
                           handleClip(
                             item.pub_date,
                             item.abstract,
-                            item.headline.main
+                            item.headline.main,
+                            item._id
                           )
                         }
                       >
-                        Clip
+                        {!clipStorageItem.some(
+                          (storageItem: News) => storageItem._id === item._id
+                        )
+                          ? 'Clip'
+                          : 'UnClip'}
                       </Button>
                     </CardActions>
                   </Card>
@@ -131,7 +141,7 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
               );
             } else {
               return (
-                <Grid item lg={6} md={4} sm={12} key={item.headline.main}>
+                <Grid item lg={6} md={4} sm={12} key={item._id}>
                   <Card
                     sx={{
                       padding: 2,
@@ -159,11 +169,16 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
                           handleClip(
                             item.pub_date,
                             item.abstract,
-                            item.headline.main
+                            item.headline.main,
+                            item._id
                           )
                         }
                       >
-                        Clip
+                        {!clipStorageItem.some(
+                          (storageItem: News) => storageItem._id === item._id
+                        )
+                          ? 'Clip'
+                          : 'UnClip'}
                       </Button>
                     </CardActions>
                   </Card>

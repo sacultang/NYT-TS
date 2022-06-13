@@ -12,3 +12,7 @@ interface MultiMedia {
   url: string;
   type: string;
 }
+export interface HistoryType {
+  id: string;
+  text: string;
+}
