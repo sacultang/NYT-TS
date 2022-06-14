@@ -21,42 +21,34 @@ interface Props {
 }
 
 const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
-  const [clip, setClip] = useState<string[]>([]);
   const [clipStorageItem, setclipStorageItem] = useState(
     JSON.parse(localStorage.getItem('Clip') || '[]')
   );
-  const [flip, setFlip] = useState(false);
+
   const handleClip = (
-    date: string,
+    pub_date: string,
     abstract: string,
-    head: string,
+    main: string,
     _id: string
   ) => {
     const newClip = {
-      date,
+      pub_date,
       abstract,
-      head,
+      main,
       _id,
     };
-
+    let getClip: any = localStorage.getItem('Clip');
+    getClip = JSON.parse(getClip);
     if (!clipStorageItem.length) {
       setclipStorageItem([...clipStorageItem, newClip]);
-      setClip((item) => [...item, date]);
-      setFlip(false);
     } else {
-      clipStorageItem.forEach((i: typeof newClip) => {
-        if (i.date !== date) {
-          setclipStorageItem([...clipStorageItem, newClip]);
-          setClip((item) => [...item, date]);
-        } else {
-          setClip(clip.filter((item) => date !== item));
-          let getClip: any = localStorage.getItem('Clip');
-          getClip = JSON.parse(getClip);
-          setclipStorageItem([
-            ...new Set([...getClip.filter((item: any) => item.date !== date)]),
-          ]);
-        }
-      });
+      if (!getClip.some((storedate: News) => storedate._id === _id)) {
+        setclipStorageItem([...clipStorageItem, newClip]);
+      } else {
+        setclipStorageItem([
+          ...new Set([...getClip.filter((item: News) => item._id !== _id)]),
+        ]);
+      }
     }
 
     // if (!clip.includes(date)) {
@@ -81,7 +73,7 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
 
   useEffect(() => {
     localStorage.setItem('Clip', JSON.stringify(clipStorageItem));
-  }, [clipStorageItem, clip, flip]);
+  }, [clipStorageItem]);
   return (
     <>
       <Container sx={{ position: 'relative' }}>

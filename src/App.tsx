@@ -8,7 +8,8 @@ import { Route, Routes } from 'react-router-dom';
 // component
 
 import Header from './components/Header';
-import NewsDetail from './routes/NewsDetail';
+import ClipList from './routes/ClipList';
+import PageNotFound from './routes/PageNotFound';
 
 const App: FC = () => {
   return (
@@ -16,7 +17,8 @@ const App: FC = () => {
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/clip' element={<NewsDetail />} />
+        <Route path='/clip' element={<ClipList />} />
+        <Route path='*' element={<PageNotFound />} />
       </Routes>
     </>
   );
