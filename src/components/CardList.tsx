@@ -1,12 +1,8 @@
-import { useState, useEffect } from "react";
-
 import NewsItem from "./NewsItem";
 // Mui Library
-
 import { Container, Grid } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { checkClip } from "../functions/function";
 import { News } from "../model";
 // Type
 interface Props {
@@ -21,28 +17,13 @@ interface Props {
 }
 
 const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
-  const [clipStorageItem, setclipStorageItem] = useState(
-    JSON.parse(localStorage.getItem("Clip") || "[]")
-  );
+  // const [clipStorageItem, setclipStorageItem] = useState(
+  //   JSON.parse(localStorage.getItem("Clip") || "[]")
+  // );
 
-  const handleClip = (newsItem: News) => {
-    console.log(newsItem);
-    let getClip: News[] = JSON.parse(localStorage.getItem("Clip") || "[]");
-
-    if (!clipStorageItem.length || checkClip(getClip, newsItem._id)) {
-      setclipStorageItem([...clipStorageItem, newsItem]);
-    } else {
-      setclipStorageItem([
-        ...new Set([
-          ...getClip.filter((item: News) => item._id !== newsItem._id),
-        ]),
-      ]);
-    }
-  };
-
-  useEffect(() => {
-    localStorage.setItem("Clip", JSON.stringify(clipStorageItem));
-  }, [clipStorageItem]);
+  // useEffect(() => {
+  //   localStorage.setItem("Clip", JSON.stringify(clipStorageItem));
+  // }, [clipStorageItem]);
   return (
     <>
       <Container sx={{ position: "relative" }}>
@@ -55,7 +36,7 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
                   _id={item._id}
                   headline={item.headline}
                   abstract={item.abstract}
-                  multimedia={item.multimedia}
+                  multimedia={item.multimedia[0].url}
                   web_url={item.web_url}
                   uri={item.uri}
                   pub_date={item.pub_date}
@@ -68,7 +49,7 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
                   _id={item._id}
                   headline={item.headline}
                   abstract={item.abstract}
-                  multimedia={item.multimedia}
+                  multimedia={item.multimedia[0].url}
                   web_url={item.web_url}
                   uri={item.uri}
                   pub_date={item.pub_date}

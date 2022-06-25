@@ -1,18 +1,31 @@
+import { useState, useEffect } from "react";
 import { News } from "../model";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store/store";
+
 import { Container, Grid } from "@mui/material";
 import NewsItem from "../components/NewsItem";
 const ClipList = () => {
-  const clipped = useSelector((state: RootState) => state.searchSlice.news);
-  const dispatch = useDispatch();
-  const handleClip = (_id: string) => {};
-  console.log(clipped);
+  const [clipStorageItem, setclipStorageItem] = useState(
+    JSON.parse(localStorage.getItem("Clip") || "[]")
+  );
+  const handleClip = (_id: string) => {
+    let getClip: any = localStorage.getItem("Clip");
+    getClip = JSON.parse(getClip);
+    console.log(getClip);
+    setclipStorageItem([
+      ...new Set([...getClip.filter((item: News) => item._id !== _id)]),
+    ]);
+  };
+
+  useEffect(() => {
+    //array 타입을 string형태로 바꾸기 위해 json.stringfy를 사용한다.
+    localStorage.setItem("Clip", JSON.stringify(clipStorageItem));
+  }, [clipStorageItem]);
+
   return (
     <>
       <Container sx={{ position: "relative" }}>
         <Grid container spacing={2} mt={10}>
-          {clipped.map((item: News) => {
+          {clipStorageItem.map((item: News) => {
             return (
               <NewsItem
                 key={item._id}

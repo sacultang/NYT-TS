@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RootState } from "../store/store";
+
 import { useSelector } from "react-redux";
 // Components
 import CardList from "../components/CardList";

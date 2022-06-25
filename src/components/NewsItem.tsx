@@ -1,11 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Container, Grid, Button } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { addClip } from "../store/searchSlice";
+import { RootState } from "../store/store";
+import { Grid, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
+import { checkClip } from "../functions/function";
 import { News } from "../model";
 const NewsItem = (props: News) => {
+  const clipped = useSelector((state: RootState) => state.searchSlice.news);
+  const dispatch = useDispatch();
+
+  // 버튼 이벤트
+  const handleClip = (props: News) => {
+    if (checkClip(clipped, props._id)) {
+      dispatch(addClip(props));
+    }
+  };
   return (
     <Grid item lg={6} md={4} sm={12} key={props._id}>
       <Card
@@ -31,13 +43,9 @@ const NewsItem = (props: News) => {
           <Button
             size="small"
             variant="contained"
-            // onClick={() => handleClip(props._id)}
+            onClick={() => handleClip(props)}
           >
-            {/* {!clipStorageItem.some(
-              (storageItem: News) => storageItem._id === props._id
-            )
-              ? "Clip"
-              : "UnClip"} */}
+            {checkClip(clipped, props._id) ? "Clip" : "UnClip"}
           </Button>
         </CardActions>
       </Card>

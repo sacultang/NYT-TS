@@ -19,6 +19,7 @@ export const dateFunc = (pub_date: string) => {
     );
   }
 };
-export const checkClip = (getClip: News[], _id: string) => {
-  return !getClip.some((storedate: News) => storedate._id === _id);
+export const checkClip = (clipped: News[], _id: string) => {
+  // console.log(getClip);
+  return !clipped.find((storedate: News) => storedate._id === _id);
 };

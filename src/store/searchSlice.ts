@@ -1,14 +1,15 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, current } from "@reduxjs/toolkit";
 import { HistoryType } from "../model";
 import { News } from "../model";
 export interface AddHistory {
   history: HistoryType[];
-  clip: News[];
+  news: News[];
 }
 const initialState: AddHistory = {
   history: [],
-  clip: [],
+  news: [],
 };
+
 export const searchSlice = createSlice({
   name: "search",
   initialState,
@@ -20,9 +21,10 @@ export const searchSlice = createSlice({
       };
     },
     addClip: (state: AddHistory, action: PayloadAction<News>) => {
+      console.log(current(state.news));
       return {
         ...state,
-        clip: [action.payload, ...state.clip],
+        news: [action.payload, ...state.news],
       };
     },
   },
