@@ -17,7 +17,7 @@ const App: FC = () => {
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/clip' element={<ClipList />} />
+        <Route path='/cliplist' element={<ClipList />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
     </>

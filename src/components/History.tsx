@@ -24,7 +24,7 @@ const History = ({ history, inputFocus }: Props) => {
             border: '1px solid #ccc',
           }}
         >
-          {history.map((key: HistoryType) => {
+          {history.slice(0, 5).map((key: HistoryType) => {
             return <div key={key.id}>{key.text}</div>;
           })}
         </Box>

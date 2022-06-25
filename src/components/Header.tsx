@@ -31,7 +31,7 @@ const Header = () => {
         <Link to='/'>
           <Button>Main</Button>
         </Link>
-        <Link to='/clip'>
+        <Link to='/cliplist'>
           <Button>Clip</Button>
         </Link>
       </Container>

@@ -1,21 +1,31 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-interface SearchState {
-  id: string;
-  text: string;
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { HistoryType } from "../model";
+import { News } from "../model";
+export interface AddHistory {
+  history: HistoryType[];
+  clip: News[];
 }
-
-const initialState: SearchState = {
-  id: '',
-  text: '',
+const initialState: AddHistory = {
+  history: [],
+  clip: [],
 };
 export const searchSlice = createSlice({
-  name: 'search',
+  name: "search",
   initialState,
   reducers: {
-    addNews: (state: SearchState, action: PayloadAction<SearchState>) => {
-      console.log(state, action.payload);
+    addHistory: (state: AddHistory, action: PayloadAction<HistoryType>) => {
+      return {
+        ...state,
+        history: [action.payload, ...state.history],
+      };
+    },
+    addClip: (state: AddHistory, action: PayloadAction<News>) => {
+      return {
+        ...state,
+        clip: [action.payload, ...state.clip],
+      };
     },
   },
 });
-export const { addNews } = searchSlice.actions;
+export const { addHistory, addClip } = searchSlice.actions;
 export default searchSlice.reducer;

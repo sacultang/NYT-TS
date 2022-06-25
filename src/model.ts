@@ -13,6 +13,6 @@ interface MultiMedia {
   type: string;
 }
 export interface HistoryType {
-  id: string;
+  id: number;
   text: string;
 }

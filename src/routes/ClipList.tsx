@@ -1,97 +1,42 @@
-import { useState, useEffect } from 'react';
-import { News } from '../model';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import { Container, Grid, Button } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import { useState, useEffect } from "react";
+import { News } from "../model";
 
-interface StorageNews extends News {
-  main: string;
-}
-
+import { Container, Grid } from "@mui/material";
+import NewsItem from "../components/NewsItem";
 const ClipList = () => {
   const [clipStorageItem, setclipStorageItem] = useState(
-    JSON.parse(localStorage.getItem('Clip') || '[]')
+    JSON.parse(localStorage.getItem("Clip") || "[]")
   );
-
-  const handleClip = (
-    pub_date: string,
-    abstract: string,
-    main: string,
-    _id: string
-  ) => {
-    const newClip = {
-      pub_date,
-      abstract,
-      main,
-      _id,
-    };
-    let getClip: any = localStorage.getItem('Clip');
+  const handleClip = (_id: string) => {
+    let getClip: any = localStorage.getItem("Clip");
     getClip = JSON.parse(getClip);
-    if (!clipStorageItem.length) {
-      setclipStorageItem([...clipStorageItem, newClip]);
-    } else {
-      if (!getClip.some((storedate: News) => storedate._id === _id)) {
-        setclipStorageItem([...clipStorageItem, newClip]);
-      } else {
-        setclipStorageItem([
-          ...new Set([...getClip.filter((item: News) => item._id !== _id)]),
-        ]);
-      }
-    }
+    console.log(getClip);
+    setclipStorageItem([
+      ...new Set([...getClip.filter((item: News) => item._id !== _id)]),
+    ]);
   };
+
   useEffect(() => {
-    localStorage.setItem('Clip', JSON.stringify(clipStorageItem));
+    //array 타입을 string형태로 바꾸기 위해 json.stringfy를 사용한다.
+    localStorage.setItem("Clip", JSON.stringify(clipStorageItem));
   }, [clipStorageItem]);
+
   return (
     <>
-      <Container sx={{ position: 'relative' }}>
+      <Container sx={{ position: "relative" }}>
         <Grid container spacing={2} mt={10}>
-          {clipStorageItem.map((item: StorageNews) => {
+          {clipStorageItem.map((item: News) => {
             return (
-              <Grid item lg={6} md={4} sm={12} key={item._id}>
-                <Card
-                  sx={{
-                    padding: 2,
-                    boxSizing: 'border-box',
-                  }}
-                >
-                  <CardContent>
-                    <Typography
-                      variant='h4'
-                      sx={{
-                        fontWeight: 700,
-                        lineHeight: 1.023,
-                        mb: 1.5,
-                      }}
-                    >
-                      {item.main}
-                    </Typography>
-                    <Typography variant='body1'>{item.abstract}</Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      size='small'
-                      variant='contained'
-                      onClick={() =>
-                        handleClip(
-                          item.pub_date,
-                          item.abstract,
-                          item.main,
-                          item._id
-                        )
-                      }
-                    >
-                      {!clipStorageItem.some(
-                        (storageItem: News) => storageItem._id === item._id
-                      )
-                        ? 'Clip'
-                        : 'UnClip'}
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
+              <NewsItem
+                key={item._id}
+                _id={item._id}
+                headline={item.headline}
+                abstract={item.abstract}
+                multimedia={item.multimedia}
+                web_url={item.web_url}
+                uri={item.uri}
+                pub_date={item.pub_date}
+              />
             );
           })}
         </Grid>
