@@ -1,10 +1,5 @@
-import {
-  differenceInDays,
-  differenceInHours,
-  format,
-  parseISO,
-} from "date-fns";
-import { News } from "../model";
+import { differenceInDays, differenceInHours, parseISO } from "date-fns";
+import { News, newInterface } from "../model";
 // Functions
 export const dateFunc = (pub_date: string) => {
   if (Math.abs(differenceInDays(parseISO(pub_date), new Date())) > 0) {

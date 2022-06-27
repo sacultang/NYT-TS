@@ -1,10 +1,8 @@
 import { useState } from "react";
 
-import { useSelector } from "react-redux";
 // Components
 import CardList from "../components/CardList";
 import Search from "../components/Search";
-import History from "../components/History";
 
 import getDataHooks from "../hooks/getDataHooks";
 

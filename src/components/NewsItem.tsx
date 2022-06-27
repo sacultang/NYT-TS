@@ -8,7 +8,11 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import { checkClip } from "../functions/function";
 import { News } from "../model";
-const NewsItem = (props: News) => {
+interface Props extends News {
+  myRef: (node: HTMLDivElement) => void;
+}
+const NewsItem = (props: Props) => {
+  // console.log(props.multimedia);
   const clipped = useSelector((state: RootState) => state.searchSlice.news);
   const dispatch = useDispatch();
 
@@ -25,6 +29,7 @@ const NewsItem = (props: News) => {
           padding: 2,
           boxSizing: "border-box",
         }}
+        ref={props.myRef}
       >
         <CardContent>
           <Typography

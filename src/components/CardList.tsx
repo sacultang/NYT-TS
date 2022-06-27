@@ -3,7 +3,7 @@ import NewsItem from "./NewsItem";
 import { Container, Grid } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { News } from "../model";
+import { News, Multimedia } from "../model";
 // Type
 interface Props {
   news: News[];
@@ -36,10 +36,11 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
                   _id={item._id}
                   headline={item.headline}
                   abstract={item.abstract}
-                  multimedia={item.multimedia[0].url}
+                  multimedia={item.multimedia}
                   web_url={item.web_url}
                   uri={item.uri}
                   pub_date={item.pub_date}
+                  myRef={lastBookelementRef}
                 />
               );
             } else {
@@ -49,10 +50,11 @@ const CardList = ({ news, loading, error, lastBookelementRef }: Props) => {
                   _id={item._id}
                   headline={item.headline}
                   abstract={item.abstract}
-                  multimedia={item.multimedia[0].url}
+                  multimedia={item.multimedia}
                   web_url={item.web_url}
                   uri={item.uri}
                   pub_date={item.pub_date}
+                  myRef={lastBookelementRef}
                 />
               );
             }

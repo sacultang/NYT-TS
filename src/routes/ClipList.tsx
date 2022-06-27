@@ -1,8 +1,9 @@
-import { News } from "../model";
+import { News, newInterface } from "../model";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { Container, Grid } from "@mui/material";
 import NewsItem from "../components/NewsItem";
+
 const ClipList = () => {
   const clipped = useSelector((state: RootState) => state.searchSlice.news);
   const dispatch = useDispatch();

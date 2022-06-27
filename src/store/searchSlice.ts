@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, current } from "@reduxjs/toolkit";
 import { HistoryType } from "../model";
-import { News } from "../model";
+import { News, newInterface } from "../model";
 export interface AddHistory {
   history: HistoryType[];
   news: News[];
