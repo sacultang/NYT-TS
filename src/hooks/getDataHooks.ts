@@ -23,7 +23,6 @@ const getDataHooks = (
   const dispatch = useDispatch();
 
   const handleAddHistory = (text: string) => {
-    // console.log('text', text);
     const SearchHistory = {
       id: Date.now(),
       text,

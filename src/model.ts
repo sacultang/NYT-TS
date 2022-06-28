@@ -11,6 +11,7 @@ export interface Multimedia {
   url: string;
 }
 type url = { url: string };
+
 export interface HistoryType {
   id: number;
   text: string;

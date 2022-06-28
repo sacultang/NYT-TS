@@ -3,7 +3,7 @@ import { useState } from "react";
 // Components
 import CardList from "../components/CardList";
 import Search from "../components/Search";
-
+import History from "../components/History";
 import getDataHooks from "../hooks/getDataHooks";
 
 import { Container } from "@mui/material";
@@ -26,7 +26,7 @@ const Home = () => {
   return (
     <Container style={{ position: "relative" }}>
       <Search setSearch={setSearch} setInputFocus={setInputFocus} />
-      {/* <History history={getHistory} inputFocus={inputFocus} /> */}
+      {/* <History inputFocus={inputFocus} /> */}
       <CardList
         news={news}
         loading={loading}

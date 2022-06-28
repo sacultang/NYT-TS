@@ -1,11 +1,11 @@
-import { createSlice, PayloadAction, current } from "@reduxjs/toolkit";
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { HistoryType } from "../model";
-import { News, newInterface } from "../model";
-export interface AddHistory {
+import { News } from "../model";
+export interface SliceType {
   history: HistoryType[];
   news: News[];
 }
-const initialState: AddHistory = {
+const initialState: SliceType = {
   history: [],
   news: [],
 };
@@ -14,14 +14,26 @@ export const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    addHistory: (state: AddHistory, action: PayloadAction<HistoryType>) => {
+    addHistory: (state: SliceType, action: PayloadAction<HistoryType>) => {
+      const searchedHistory = current(state.history);
+      let filterHistory = searchedHistory.filter((e) => {
+        return e.text !== action.payload.text;
+      });
+
       return {
         ...state,
-        history: [action.payload, ...state.history],
+        history: [action.payload, ...filterHistory],
       };
     },
-    addClip: (state: AddHistory, action: PayloadAction<News>) => {
-      console.log(current(state.news));
+    removeHistory: (state: SliceType, action: PayloadAction<HistoryType>) => {
+      return {
+        ...state,
+        history: state.history.filter(
+          (history) => history.id !== action.payload.id
+        ),
+      };
+    },
+    addClip: (state: SliceType, action: PayloadAction<News>) => {
       return {
         ...state,
         news: [action.payload, ...state.news],
@@ -29,5 +41,5 @@ export const searchSlice = createSlice({
     },
   },
 });
-export const { addHistory, addClip } = searchSlice.actions;
+export const { addHistory, addClip, removeHistory } = searchSlice.actions;
 export default searchSlice.reducer;

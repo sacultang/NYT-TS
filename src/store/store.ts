@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
-import reducer from './rootReducer';
+import { configureStore } from "@reduxjs/toolkit";
+import reducer from "./rootReducer";
 import {
   FLUSH,
   REHYDRATE,
@@ -9,17 +9,18 @@ import {
   REGISTER,
   persistStore,
   persistReducer,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 // import { getDefaultMiddleware } from '@reduxjs/toolkit';
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   version: 1,
   storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
+
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
