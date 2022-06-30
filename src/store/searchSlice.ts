@@ -39,7 +39,16 @@ export const searchSlice = createSlice({
         news: [action.payload, ...state.news],
       };
     },
+    removeClip: (state: SliceType, action: PayloadAction<News>) => {
+      return {
+        ...state,
+        news: state.news.filter(
+          (clipNews) => clipNews._id !== action.payload._id
+        ),
+      };
+    },
   },
 });
-export const { addHistory, addClip, removeHistory } = searchSlice.actions;
+export const { addHistory, addClip, removeHistory, removeClip } =
+  searchSlice.actions;
 export default searchSlice.reducer;

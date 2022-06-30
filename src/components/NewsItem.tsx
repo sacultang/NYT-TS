@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { addClip } from "../store/searchSlice";
+import { addClip, removeClip } from "../store/searchSlice";
 import { RootState } from "../store/store";
 import { Grid, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -9,7 +9,7 @@ import CardActions from "@mui/material/CardActions";
 import { checkClip } from "../functions/function";
 import { News } from "../model";
 interface Props extends News {
-  myRef: (node: HTMLDivElement) => void;
+  myRef?: (node: HTMLDivElement) => void;
 }
 const NewsItem = (props: Props) => {
   // console.log(props.multimedia);
@@ -20,6 +20,8 @@ const NewsItem = (props: Props) => {
   const handleClip = (props: News) => {
     if (checkClip(clipped, props._id)) {
       dispatch(addClip(props));
+    } else {
+      dispatch(removeClip(props));
     }
   };
   return (
